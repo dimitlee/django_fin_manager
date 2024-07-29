@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+  <form method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+    <table class="form-table">
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.password1.label_tag }}</td>
+        <td>{{ form.password1 }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.password2.label_tag }}</td>
+        <td>{{ form.password2 }}</td>
+      </tr>
+    </table>
+    <input type="submit" value="register">
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+
+  <p>Already registered? <a href="{% url 'login' %}">Log in</a></p>
+{% endblock %}

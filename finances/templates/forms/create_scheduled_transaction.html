@@ -1,0 +1,54 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+  <form method="post" action="{% url 'create-scheduled-transaction' %}">
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit" />
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const frequencyOption = document.getElementById('{{ form.frequency.id_for_label }}');
+      const weekdayOption = document.getElementById('{{ form.weekday.id_for_label }}');
+      const monthdayField = document.getElementById('{{ form.monthday.id_for_label }}');
+      const yeardateField = document.getElementById('{{ form.year_date.id_for_label }}');
+      
+      const weekdayOptionRow = weekdayOption.parentNode.parentNode
+      const monthdayFieldRow = monthdayField.parentNode.parentNode
+      const yeardateFieldRow = yeardateField.parentNode.parentNode
+
+      function updateFieldRequirements() {
+        weekdayOptionRow.style.display = 'none';
+        monthdayFieldRow.style.display = 'none';
+        yeardateFieldRow.style.display = 'none';
+        weekdayOptionRow.required = false;
+        monthdayFieldRow.required = false;
+        yeardateFieldRow.required = false;
+
+        switch(frequencyOption.value) {
+          case 'y': //Yearly
+            yeardateFieldRow.style.display = '';
+            yeardateFieldRow.required = true;
+            break;
+          case 'm': //Monthly
+            monthdayFieldRow.style.display = '';
+            monthdayFieldRow.required = true;
+            break;
+          case 'w': //Daily
+            weekdayOptionRow.style.display = '';
+            weekdayOptionRow.required = true;
+            break;
+        }
+      }
+
+      frequencyOption.addEventListener('change', updateFieldRequirements);
+
+      updateFieldRequirements();
+    });
+  </script>
+
+{% endblock %}

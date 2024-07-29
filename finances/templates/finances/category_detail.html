@@ -1,0 +1,101 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Your Category</h1>
+  <p>
+    This is one of your categories, here you can add a transaction related to this category, and view all transactions you added, that are related to your category.
+  </p>
+  <table class="top-bar-buttons">
+    <tr>
+      <td><a href="">Edit category</a></td>
+    </tr>
+  </table>
+  <table class="list">
+    <tr>
+      <td style="width:10%;"><strong>Category</strong></td>
+      <td>{{ category.name }}</td>
+    </tr>
+    <tr>
+      <td><strong>Description</strong></td>
+      <td>{{ category.description }}</td>
+    </tr>
+  </table>
+
+  <div style="margin-top:20px;">
+    <h4>Add new transaction</h4>
+    <form 
+      method="post" 
+      action="{% url 'create-transaction' %}?next={{ request.path }}"
+      id="transaction-form">
+      {% csrf_token %}
+      <table>
+        {{ transaction_form.as_table }}
+      </table>
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+
+  <div style="margin-left:20px;margin-top:20px;">
+    <h4>Transactions</h4>
+    <table class="list">
+    {% for transaction in category.transaction_set.all %}
+      <tr>
+        <td style="width: 5%">
+          <p>{{ forloop.counter }}</p>
+        </td>
+        <td style="text-align: left;">
+          <p class="{% if transaction.sum > 0 %}sum-positive{% elif transaction.sum < 0 %}sum-negative{% endif %}">
+            {% if transaction.sum > 0 %}+{% endif %}{{ transaction.sum }}
+          </p>
+        </td>
+        <td style="text-align: right;">
+          <p>{{ transaction.time }}</p>
+        </td>
+        <td style="width: 5%"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="2">
+          {{ transaction.description }}
+        </td>
+        <td class="delete-btn"><a href="{% url 'delete-transaction' pk=transaction.id %}?next={{ request.path }}">X</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+
+  <div style="margin-left:20px;margin-top:20px;">
+    <h4>Scheduled Transactions</h4>
+    <table class="list">
+    {% for transaction in category.scheduledtransaction_set.all %}
+      <tr>
+        <td style="width: 5%">
+          <p>{{ forloop.counter }}</p>
+        </td>
+        <td style="text-align: left;">
+          <p class="{% if transaction.sum > 0 %}sum-positive{% elif transaction.sum < 0 %}sum-negative{% endif %}">
+            {% if transaction.sum > 0 %}+{% endif %}{{ transaction.sum }}
+          </p>
+        </td>
+        <td style="text-align: right;">
+          <p>{{ transaction.time }}</p>
+        </td>
+        <td style="width: 5%"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="2">
+          {{ transaction.description }}
+        </td>
+        <td class="delete-btn"><a href="{% url 'delete-transaction' pk=transaction.id %}?next={{ request.path }}">X</a></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="2">
+          <p>{{ transaction.frequency }}</p>
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+{% endblock %}

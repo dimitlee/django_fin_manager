@@ -1,0 +1,96 @@
+.sidebar-nav {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+  
+#logout-form {
+  display: inline;
+}
+
+#logout-form button {
+  padding: 0;
+  margin: 0;
+}
+
+table {
+  width: auto;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+td {
+  border: 3px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+  color: black;
+}
+
+td:hover {
+  background-color: #ddd;
+}
+
+table.user-categories {
+  width: 100%;
+}
+
+table.user-categories td {
+  text-align: center;
+}
+
+table.user-categories td p {
+  font-size: large;
+}
+
+table.top-bar-buttons {
+  background-color: #98da87;
+  width: 100%;
+}
+
+table.top-bar-buttons {
+  text-align: center;
+}
+
+form table td {
+  border: none;
+}
+
+form table td:hover {
+  background-color: transparent;
+}
+
+table.list {
+  width: 70%;
+}
+
+table.list td {
+  border: none;
+}
+
+td.delete-btn {
+  background-color: #ab1010;
+  text-align: center;
+}
+
+td.delete-btn a {
+  color: white;
+}
+
+p.sum-positive {
+  color: #98da87;
+}
+
+p.sum-negative {
+  color: #d34141;
+}

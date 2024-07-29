@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Adding a category</h1>
+  <p>
+    Here's a list of default categories, you can add any of them, or you can add you own category
+  </p>
+  <h2>Default categories</h2>
+  {% if category_list %}
+  <table>
+    {% for category in category_list %}
+      <tr>
+        <td><h4>{{ category }}</h4></td>
+        <td><p>{{ category.description }}</p></td>
+        <td>
+          {% if category.is_added_by_user %}
+            <p>Added</p>
+          {% else %}
+            <a href="{{ category.get_add_to_user_url }}">Add</a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tr>
+  </table>
+  {% else %}
+    <p>Sorry, there are no default categories</p>
+  {% endif %}
+  <h2>Your categories</h2>
+  {% if user_categories %}
+  <ul>
+    {% for category in user_categories %}
+      <li><h4>{{ category }}</h4><br><p>{{category.description}}</p></li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>You haven't added any categories</p>
+  {% endif %}
+  <a href="{% url 'create-category' %}?next={{ request.path }}">Create my own category</a>
+{% endblock %}
